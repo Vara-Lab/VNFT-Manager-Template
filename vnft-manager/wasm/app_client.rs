@@ -153,6 +153,15 @@ impl<R: Remoting + Clone> traits::VnftManagerSvc for VnftManagerSvc<R> {
             user_address,
         )
     }
+    fn num_of_nfts_from_user_as_u_128(
+        &self,
+        user_address: ActorId,
+    ) -> impl Query<Output = VnftManagerQueryEvents, Args = R::Args> {
+        RemotingAction::<_, vnft_manager_svc::io::NumOfNftsFromUserAsU128>::new(
+            self.remoting.clone(),
+            user_address,
+        )
+    }
 }
 
 pub mod vnft_manager_svc {
@@ -281,6 +290,22 @@ pub mod vnft_manager_svc {
             type Params = ActorId;
             type Reply = super::VnftManagerQueryEvents;
         }
+        pub struct NumOfNftsFromUserAsU128(());
+        impl NumOfNftsFromUserAsU128 {
+            #[allow(dead_code)]
+            pub fn encode_call(user_address: ActorId) -> Vec<u8> {
+                <NumOfNftsFromUserAsU128 as ActionIo>::encode_call(&user_address)
+            }
+        }
+        impl ActionIo for NumOfNftsFromUserAsU128 {
+            const ROUTE: &'static [u8] = &[
+                56, 86, 110, 102, 116, 77, 97, 110, 97, 103, 101, 114, 83, 118, 99, 92, 78, 117,
+                109, 79, 102, 78, 102, 116, 115, 70, 114, 111, 109, 85, 115, 101, 114, 65, 115, 85,
+                49, 50, 56,
+            ];
+            type Params = ActorId;
+            type Reply = super::VnftManagerQueryEvents;
+        }
     }
 }
 #[derive(PartialEq, Clone, Debug, Encode, Decode, TypeInfo)]
@@ -374,6 +399,10 @@ pub mod traits {
             token_id: U256,
         ) -> impl Query<Output = VnftManagerQueryEvents, Args = Self::Args>;
         fn num_of_nfts_from_user(
+            &self,
+            user_address: ActorId,
+        ) -> impl Query<Output = VnftManagerQueryEvents, Args = Self::Args>;
+        fn num_of_nfts_from_user_as_u_128(
             &self,
             user_address: ActorId,
         ) -> impl Query<Output = VnftManagerQueryEvents, Args = Self::Args>;

@@ -265,6 +265,35 @@ where VnftClient: Vnft { // We specify the type of the generic type (The client)
         VNFTManagerQueryEvents::UserNumOfTokensOwned(user_num_of_tokens)
     }
 
+    pub async fn num_of_nfts_from_user_as_u128(&self, user_address: ActorId) -> VNFTManagerQueryEvents {
+        let state = self.state_ref();
+
+        // Get the vnft contract id, if it is not set, return an error
+        let Some(vnft_contract_id) = state.vnft_contract_id.clone() else {
+            return VNFTManagerQueryEvents::Error(
+                VNFTManagerErrors::VftContractIdNotSet
+            );
+        };
+
+        // Send the message to the extended_vft contract and wait for response
+        let response = self.vnft_client // Set the client to call
+            .balance_of(user_address) // Set the method to call from contract
+            .recv(vnft_contract_id) // send and wait for response
+            .await;
+
+        // If contract return an error, notify to the user
+        let user_num_of_tokens = match response {
+            Ok(num_of_tokens) => num_of_tokens,
+            Err(error) => {
+                return VNFTManagerQueryEvents::Error(
+                    VNFTManagerErrors::ErrorInVNFTContract(error.to_string())
+                );
+            }
+        };
+
+        VNFTManagerQueryEvents::UserNumOfTokensOwnedAsu128(user_num_of_tokens.as_u128())
+    }
+
     pub async fn nft_owner_by_token_id(&self, token_id: U256) -> VNFTManagerQueryEvents {
         let state = self.state_ref();
 

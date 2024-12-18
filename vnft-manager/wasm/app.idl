@@ -44,5 +44,6 @@ service VnftManagerSvc {
   query NftAddressApproved : (token_id: u256) -> VnftManagerQueryEvents;
   query NftOwnerByTokenId : (token_id: u256) -> VnftManagerQueryEvents;
   query NumOfNftsFromUser : (user_address: actor_id) -> VnftManagerQueryEvents;
+  query NumOfNftsFromUserAsU128 : (user_address: actor_id) -> VnftManagerQueryEvents;
 };
 
