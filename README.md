@@ -17,7 +17,7 @@ It controls the minting, burning, and transfer of nfts on VNFT contract.
 ## Step 1: Open Contract on Gitpod
 
 <p align="center">
-  <a href="https://gitpod.io/#https://github.com/Vara-Lab/VFT-Manager-Template" target="_blank">
+  <a href="https://gitpod.io/#https://github.com/Vara-Lab/VNFT-Manager-Template.git" target="_blank">
     <img src="https://gitpod.io/button/open-in-gitpod.svg" width="240" alt="Gitpod">
   </a>
 </p>
@@ -74,7 +74,7 @@ Once the compilation is complete, locate the `*.opt.wasm` file in the `target/wa
 ## Try ut on gitpod!
 
 <p align="center">
-  <a href="https://gitpod.io/#https://github.com/Vara-Lab/VFT-Manager-Template" target="_blank">
+  <a href="https://gitpod.io/#https://github.com/Vara-Lab/VNFT-Manager-Template.git" target="_blank">
     <img src="https://gitpod.io/button/open-in-gitpod.svg" width="240" alt="Gitpod">
   </a>
 </p>
